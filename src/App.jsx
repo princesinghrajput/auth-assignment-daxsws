@@ -1,13 +1,21 @@
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Hero from './components/Hero';
+
 function App() {
-
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world</h1>
-    </>
- 
-  )
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/hero" element={<Hero />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;

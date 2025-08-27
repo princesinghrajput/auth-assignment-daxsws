@@ -1,12 +1,74 @@
-# React + Vite
+# React Login & Sign-Up Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React application featuring login and sign-up functionality with form validation and a hero section.
 
-Currently, two official plugins are available:
+## Assignment Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Login & Sign-Up Forms**: Complete authentication flow with validation
+- **Form Validation**: Real-time validation using Yup schema
+- **Hero Section**: Simple landing page after successful login
+- **Responsive Design**: Works on all device sizes
+- **Modern UI**: Clean interface with Material-UI and Tailwind CSS
 
-## Expanding the ESLint configuration
+## Quick Start
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Start the application**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open browser**
+   Navigate to `http://localhost:5173`
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── TextField.jsx      # Reusable input component
+│   ├── Login.jsx          # Login page
+│   ├── SignUp.jsx         # Registration page
+│   └── Hero.jsx           # Hero section (Assignment Done!)
+├── utils/
+│   └── validationSchemas.js # Yup validation schemas
+├── App.jsx                # Main app with routing
+└── main.jsx              # Entry point
+```
+
+## How It Works
+
+1. **Login Page** (`/`) - Enter username and password
+2. **Sign-Up Page** (`/signup`) - Register with full form validation
+3. **Hero Section** (`/hero`) - Displays "Assignment Done!" after login
+
+## Validation Rules
+
+- **Name**: Alphabets only, required
+- **Username**: Alphanumeric with special characters
+- **Email**: Valid email format required
+- **Phone**: 10-digit number required
+- **Password**: Minimum 6 characters, cannot match username
+- **Confirm Password**: Must match password
+
+## Technologies
+
+- React 19
+- React Router DOM
+- Material-UI
+- Tailwind CSS
+- Yup (validation)
+- Vite
+
+## Assignment Completed ✅
+
+This project demonstrates:
+- Form handling and validation
+- Component-based architecture
+- Routing and navigation
+- Responsive design
+- Modern React practices
