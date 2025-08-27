@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import TextField from './TextField';
 import Button from '@mui/material/Button';
 import { signupSchema } from '../utils/validationSchemas';
+import AuthService from '../services/auth/authService';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -24,6 +26,9 @@ const SignUp = () => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: '' }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -32,21 +37,41 @@ const SignUp = () => {
     setErrors({});
     
     try {
+      // Client-side validation first
       await signupSchema.validate(formData, { abortEarly: false });
       
-      // Simulate API call
-      setTimeout(() => {
-        alert('Account created successfully!');
+      // Call API
+      const result = await AuthService.register(formData);
+      
+      if (result.success) {
+    
+        toast.success('Account created successfully! Please login with your credentials.');
         navigate('/');
-        setIsLoading(false);
-      }, 1500);
+      } else {
+        
+        if (result.validationErrors) {
+          setErrors(result.validationErrors);
+          toast.error('Please check the form for errors.');
+        } else {
+          setErrors({ general: result.message });
+          toast.error(result.message);
+        }
+      }
       
     } catch (validationErrors) {
-      const newErrors = {};
-      validationErrors.inner.forEach(error => {
-        newErrors[error.path] = error.message;
-      });
-      setErrors(newErrors);
+      if (validationErrors.inner) {
+        
+        const newErrors = {};
+        validationErrors.inner.forEach(error => {
+          newErrors[error.path] = error.message;
+        });
+        setErrors(newErrors);
+        toast.error('Please check the form for errors.');
+      } else {
+        setErrors({ general: 'An error occurred. Please try again.' });
+        toast.error('An error occurred. Please try again.');
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -62,6 +87,15 @@ const SignUp = () => {
 
         <div className="px-6 py-8 sm:px-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {errors.general && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-300 text-red-800 rounded-md flex items-center">
+                <svg className="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                <span className="font-medium">{errors.general}</span>
+              </div>
+            )}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <TextField
                 label="Name"
