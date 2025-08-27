@@ -9,10 +9,12 @@ dotenv.config();
 const app = express();
 
 // Middleware
+// Simple allow all origins
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://auth-assignment-api.onrender.com'],
-  credentials: true
-}));
+    origin: '*',
+    credentials: true
+  }));
+  
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
