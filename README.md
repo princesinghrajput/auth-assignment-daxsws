@@ -71,4 +71,3 @@ This project demonstrates:
 - Component-based architecture
 - Routing and navigation
 - Responsive design
-- Modern React practices

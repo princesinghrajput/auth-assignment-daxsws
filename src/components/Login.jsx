@@ -56,7 +56,7 @@ const Login = () => {
             />
 
             <TextField
-              label="NEW PASSWORD"
+              label="PASSWORD"
               type="password"
               name="password"
               value={formData.password}
